@@ -11,10 +11,11 @@ flex-direction: column;
 .form input {
 width: 200px;
 height: 25px;
+margin-top: 15px;
 }
 .button {
 
-margin-top: 20px;
+margin-bottom: 20px;
 width: 100px;
 height: 30px;
 cursor: pointer;
