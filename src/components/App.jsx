@@ -3,7 +3,7 @@ import { FormAddContacts } from './FormAddContacts/FormAddContacts';
 import { Component } from 'react';
 import { Filter } from './Filter/Filter';
 import { nanoid } from 'nanoid';
-import { Contacts } from './Contacts/Contacts';
+import { ContactList } from './Contacts/ContactList';
 
 export class App extends Component {
   state = {
@@ -25,6 +25,12 @@ export class App extends Component {
     this.setState({ [name]: value });
   };
 
+  filterChange = e => {
+    const { value } = e.target;
+    this.setState({ filter: value });
+    console.log(this.state.filter);
+  };
+  
   handleSubmit = e => {
     e.preventDefault();
     const { name, number } = this.state;
@@ -35,8 +41,6 @@ export class App extends Component {
       number: number,
     };
 
-    console.log(newContact);
-
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact],
     }));
@@ -44,6 +48,9 @@ export class App extends Component {
   };
 
   render() {
+    const filteredContacts = this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+    );
     return (
       <div className={css.wrap}>
         <h2>Phonebook</h2>
@@ -53,10 +60,14 @@ export class App extends Component {
           handleSubmit={this.handleSubmit}
         />
         <h2>Find contacts by name</h2>
-        <Filter state={this.state} />
+        <Filter state={this.state} filterChange={this.filterChange} />
 
         <h2>Contacts</h2>
-        <Contacts contacts={this.state.contacts} />
+        {this.state.filter === '' ? (
+          <ContactList contacts={this.state.contacts} />
+        ) : (
+          <ContactList contacts={filteredContacts} />
+        )}
       </div>
     );
   }

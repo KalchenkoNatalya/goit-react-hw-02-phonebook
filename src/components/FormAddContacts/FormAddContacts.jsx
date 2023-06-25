@@ -1,5 +1,6 @@
 import css from './FormAddContacts.module.css'
 import { nanoid } from 'nanoid';
+import { Component } from 'react';
 
 export const FormAddContacts  = ({handleSubmit, inputChange, state, }) => {
     const idNameInput = nanoid();
