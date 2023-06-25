@@ -14,6 +14,7 @@ export class FormAddContacts extends Component {
 
     this.setState({ [name]: value });
     console.log(name + ': ' + value);
+  
   };
 
   handleSubmit = e => {
@@ -40,7 +41,7 @@ export class FormAddContacts extends Component {
           onChange={this.inputChange}
           required
         />
-        <label htmlFor={this.props.idNumberInput}>Number</label>
+        <label htmlFor={this.idNumberInput}>Number</label>
         <input
           type="tel"
           name="number"
