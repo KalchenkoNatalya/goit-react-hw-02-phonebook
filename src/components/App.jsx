@@ -22,18 +22,20 @@ export class App extends Component {
   };
 
   addContacts = (name, number) => {
-    const existingContact = this.state.contacts.find(
+    const isExist = this.state.contacts.find(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
 
-    existingContact
-      ? alert(`${name} is already in contacts`)
-      : this.setState(prevState => ({
-          contacts: [
-            ...prevState.contacts,
-            { id: nanoid(), name: name, number: number },
-          ],
-        }));
+    if (isExist) {
+      alert(`${name} is already in contacts`);
+      return;
+    }
+    this.setState(prevState => ({
+      contacts: [
+        ...prevState.contacts,
+        { id: nanoid(), name: name, number: number },
+      ],
+    }));
   };
 
   render() {
