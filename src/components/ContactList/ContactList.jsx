@@ -1,22 +1,27 @@
-// import { Component } from "react";
+import PropTypes from 'prop-types';
+import css from './ContactList.module.css'
 
-export const ContactList = ({ contacts }) => {
+export const ContactList = ({ contacts, onRemoveBook }) => {
   return (
     <ul>
       {contacts.map(contact => (
-        <li key={contact.id}>{contact.name}: {contact.number}</li>
+        <li key={contact.id} className={css.item}>
+          <p>
+            {contact.name}: {contact.number}
+          </p>
+          <button onClick={() => onRemoveBook(contact.id)} className={css.btnRemove}>Remove</button>
+        </li>
       ))}
     </ul>
   );
 };
-//  export class ContactList extends Component {
-//   render() {
-//     return (
-//       <ul>
-//         {this.props.contacts.map(contact => (
-//           <li key={contact.id}>{contact.name}: {contact.number}</li>
-//         ))}
-//       </ul>
-//     );
-//   }
-//  }
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+  onRemoveBook: PropTypes.func.isRequired,
+};

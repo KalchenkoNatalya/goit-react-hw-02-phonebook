@@ -4,6 +4,7 @@ import { Component } from 'react';
 import { Filter } from './Filter/Filter';
 import { nanoid } from 'nanoid';
 import { ContactList } from './ContactList/ContactList';
+import PropTypes from 'prop-types';
 
 export class App extends Component {
   state = {
@@ -38,6 +39,12 @@ export class App extends Component {
     }));
   };
 
+  onRemoveBook = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
+
   render() {
     const filteredContacts = this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
@@ -46,12 +53,16 @@ export class App extends Component {
       <div className={css.wrap}>
         <h2>Phonebook</h2>
         <FormAddContacts addContacts={this.addContacts} />
+        
         <h2>Find contacts by name</h2>
         <Filter state={this.state} filterChange={this.filterChange} />
 
         <h2>Contacts</h2>
         {this.state.filter === '' ? (
-          <ContactList contacts={this.state.contacts} />
+          <ContactList
+            contacts={this.state.contacts}
+            onRemoveBook={this.onRemoveBook}
+          />
         ) : (
           <ContactList contacts={filteredContacts} />
         )}
@@ -59,3 +70,17 @@ export class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      number: PropTypes.string,
+    })
+  ),
+  filter: PropTypes.string,
+  filterChange: PropTypes.func,
+  addContacts: PropTypes.func,
+  onRemoveBook: PropTypes.func,
+};

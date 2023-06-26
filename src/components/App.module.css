@@ -1,5 +1,12 @@
 .wrap {
-    margin-right: auto;
-margin-left: auto;
-display: inline-block;
+    padding-top: 50px;
+    margin: 0 auto;
+    width: 300px;
+
+}
+
+h2 {
+    margin-top: 15px;
+    margin-bottom: 15px;
+   
 }
